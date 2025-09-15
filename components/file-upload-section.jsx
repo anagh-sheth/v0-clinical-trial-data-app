@@ -9,31 +9,6 @@ import { Badge } from "@/components/ui/badge"
 import { Upload, FileText, CheckCircle, XCircle, AlertCircle, Loader2, Database } from "lucide-react"
 import AnalysisResults from "./analysis-results"
 
-const UploadedFile = {
-  file: null,
-  id: "",
-  status: "",
-  progress: 0,
-}
-
-const AnalysisResult = {
-  decision: "",
-  confidence: 0,
-  riskScore: 0,
-  keyFindings: [],
-  recommendations: [],
-  dataQuality: {
-    completeness: 0,
-    consistency: 0,
-    accuracy: 0,
-  },
-  timeline: {
-    phase: "",
-    estimatedDuration: "",
-    criticalPath: [],
-  },
-}
-
 export function FileUploadSection() {
   const [clinicalTrialFiles, setClinicalTrialFiles] = useState([])
   const [referenceDatasetFiles, setReferenceDatasetFiles] = useState([])
