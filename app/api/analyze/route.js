@@ -1,9 +1,9 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const formData = await request.formData()
-    const files = formData.getAll("files") as File[]
+    const files = formData.getAll("files")
 
     if (!files || files.length === 0) {
       return NextResponse.json({ error: "No files provided" }, { status: 400 })
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     // 4. Generate comprehensive reports
 
     const analysisResult = {
-      decision: "conditional" as const,
+      decision: "conditional",
       confidence: Math.floor(Math.random() * 30) + 70, // 70-100%
       riskScore: Math.floor(Math.random() * 40) + 20, // 20-60
       keyFindings: [
