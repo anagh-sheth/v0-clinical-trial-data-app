@@ -38,6 +38,13 @@ const AnalysisResults = ({ result }) => {
     }
   }
 
+  const getPValueSignificance = (pValue) => {
+    if (pValue < 0.01) return { label: "Highly Significant", color: "bg-accent text-accent-foreground" }
+    if (pValue < 0.05) return { label: "Significant", color: "bg-primary text-primary-foreground" }
+    if (pValue < 0.1) return { label: "Marginally Significant", color: "bg-amber-500 text-white" }
+    return { label: "Not Significant", color: "bg-muted text-muted-foreground" }
+  }
+
   return (
     <div className="space-y-6">
       {/* Decision Summary */}
@@ -59,6 +66,57 @@ const AnalysisResults = ({ result }) => {
           </div>
         </div>
       </Alert>
+
+      {/* Statistical Analysis Results */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Statistical Analysis Results</CardTitle>
+          <CardDescription>P-values for clinical trial endpoints and parameters</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {result.pValues.map((item, index) => {
+              const significance = getPValueSignificance(item.value)
+              return (
+                <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex-1">
+                    <h4 className="font-medium mb-1">{item.test}</h4>
+                    <p className="text-2xl font-bold text-primary">p = {item.value.toFixed(3)}</p>
+                  </div>
+                  <Badge className={significance.color}>{significance.label}</Badge>
+                </div>
+              )
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Significance Legend */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Significance Legend</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2">
+              <Badge className="bg-accent text-accent-foreground">Highly Significant</Badge>
+              <span className="text-muted-foreground">p {"<"} 0.01</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge className="bg-primary text-primary-foreground">Significant</Badge>
+              <span className="text-muted-foreground">p {"<"} 0.05</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge className="bg-amber-500 text-white">Marginally Significant</Badge>
+              <span className="text-muted-foreground">p {"<"} 0.1</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge className="bg-muted text-muted-foreground">Not Significant</Badge>
+              <span className="text-muted-foreground">p ≥ 0.1</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Risk Assessment */}
