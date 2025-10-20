@@ -12,15 +12,38 @@ export async function POST(request) {
     // Simulate processing time
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
+    // Mock analysis result - in a real implementation, this would:
+    // 1. Process the uploaded files
+    // 2. Run statistical analysis
+    // 3. Apply ML models for decision making
+    // 4. Generate comprehensive reports
+
     const analysisResult = {
-      pValues: [
-        { test: "Primary Endpoint", value: Math.random() * 0.1 },
-        { test: "Secondary Endpoint A", value: Math.random() * 0.15 },
-        { test: "Secondary Endpoint B", value: Math.random() * 0.2 },
-        { test: "Safety Parameter 1", value: Math.random() * 0.3 },
-        { test: "Safety Parameter 2", value: Math.random() * 0.1 },
-        { test: "Efficacy Measure", value: Math.random() * 0.05 },
+      decision: "conditional",
+      confidence: Math.floor(Math.random() * 30) + 70, // 70-100%
+      riskScore: Math.floor(Math.random() * 40) + 20, // 20-60
+      keyFindings: [
+        "Primary endpoint shows statistical significance (p=0.032)",
+        "Safety profile within acceptable parameters",
+        "Patient recruitment exceeded target by 15%",
+        "Minor protocol deviations in 3.2% of cases",
       ],
+      recommendations: [
+        "Proceed to Phase III with modified dosing protocol",
+        "Implement enhanced safety monitoring",
+        "Consider expanding inclusion criteria",
+        "Strengthen data collection procedures",
+      ],
+      dataQuality: {
+        completeness: Math.floor(Math.random() * 10) + 90,
+        consistency: Math.floor(Math.random() * 15) + 80,
+        accuracy: Math.floor(Math.random() * 10) + 85,
+      },
+      timeline: {
+        phase: "Phase II to Phase III Transition",
+        estimatedDuration: "18-24 months",
+        criticalPath: ["Regulatory submission", "Site activation", "Patient enrollment"],
+      },
     }
 
     return NextResponse.json(analysisResult)
